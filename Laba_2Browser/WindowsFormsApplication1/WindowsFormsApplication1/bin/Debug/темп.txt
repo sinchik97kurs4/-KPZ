@@ -1,0 +1,16 @@
+
+            if (Search.Text == "Google")
+            {
+
+                WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+                wb.Navigate("https://www.google.com.ua/?gfe_rd=cr&ei=NzgCWLPgGZLGZO2Ml_AC&gws_rd=ssl#q="+ SearchText.Text);
+                
+            }
+            else
+            {
+
+                WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+                wb.Navigate("https://yandex.ua/search/?lr=10347&msid=1476540805.94971.22895.21554&text=" + SearchText.Text);
+
+
+            }

@@ -8,14 +8,93 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace WindowsFormsApplication1
 {
+    [Serializable]
+    struct Story
+    {
+   public string title, url;
+   public string dateTime;
+    }
+
+
     public partial class Form1 : Form
     {
+        public Form2 MenuForm;
+        LinkedList<Story> History = new LinkedList<Story>();
+
+        public void Check_url()
+        {
+            WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+            tabControl1.SelectedTab.Text = wb.DocumentTitle;
+            URL.Text = wb.Url.ToString();
+
+
+
+            if (!File.Exists("story.bin"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
+
+                Story story = new Story();
+                story.url = wb.Url.ToString();
+                story.title = wb.DocumentTitle;
+                story.dateTime = DateTime.Now.ToString();
+                History.AddLast(story);
+                bf.Serialize(fs, History);
+                fs.Close();
+              
+
+            }
+            else
+            {
+
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
+                History = (LinkedList<Story>)bf.Deserialize(fs);
+                Story story = new Story();
+                story.url = wb.Url.ToString();
+                story.title = wb.DocumentTitle;
+                story.dateTime = DateTime.Now.ToString();
+                History.AddLast(story);
+                bf.Serialize(fs, History);
+                fs.Close();
+              
+
+            }
+
+
+
+
+
+
+            
+            
+            
+
+        }
+
+        public void Switch()
+        {
+            if (Search.Text == "Google")
+            {
+                Search.Text = "Yandex";
+            }
+            else
+            {
+                Search.Text = "Google";
+            }
+        }
+
         public Form1()
         {
             InitializeComponent();
+
+            MenuForm = new Form2();
+            MenuForm.Owner = this;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -35,7 +114,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void URL_KeyDown(object sender, KeyEventArgs e)
@@ -140,14 +219,7 @@ namespace WindowsFormsApplication1
             Check_url();
         }
 
-      public void Check_url()
-        {
-
-            WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
-            tabControl1.SelectedTab.Text = wb.DocumentTitle;
-            URL.Text = wb.Url.ToString();
-        }
-
+   
         private void button4_Click(object sender, EventArgs e)
         {
 
@@ -156,14 +228,57 @@ namespace WindowsFormsApplication1
             Check_url();
         }
 
-        public void Switch()
-        {
-            if(Labe)
-        }
+       
         private void button7_Click(object sender, EventArgs e)
         {
-        
 
+            Switch();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void flowLayoutPanel1_MouseLeave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button5_MouseEnter(object sender, EventArgs e)
+        {
+       
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+         
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+           
+            MenuForm.ShowDialog();
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+            if (Search.Text == "Google")
+            {
+
+                WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+                wb.Navigate("https://www.google.com.ua/?gfe_rd=cr&ei=NzgCWLPgGZLGZO2Ml_AC&gws_rd=ssl#q=" + SearchText.Text);
+
+            }
+            else
+            {
+
+                WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+                wb.Navigate("https://yandex.ua/search/?lr=10347&msid=1476540805.94971.22895.21554&text=" + SearchText.Text);
+
+
+            }
         }
     }
 }
