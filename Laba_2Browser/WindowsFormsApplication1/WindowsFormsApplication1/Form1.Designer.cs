@@ -45,6 +45,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.URL = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -106,6 +107,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
+            this.panel1.Controls.Add(this.button6);
             this.panel1.Controls.Add(this.button8);
             this.panel1.Controls.Add(this.Search);
             this.panel1.Controls.Add(this.button7);
@@ -255,6 +257,19 @@
             this.URL.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.URL.KeyDown += new System.Windows.Forms.KeyEventHandler(this.URL_KeyDown);
             // 
+            // button6
+            // 
+            this.button6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button6.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button6.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button6.BackgroundImage")));
+            this.button6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button6.Location = new System.Drawing.Point(902, 58);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(59, 50);
+            this.button6.TabIndex = 21;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click_1);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,6 +307,7 @@
         private System.Windows.Forms.Label Search;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.Button button6;
     }
 }
 

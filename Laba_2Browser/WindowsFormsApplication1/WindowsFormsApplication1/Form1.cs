@@ -16,21 +16,34 @@ namespace WindowsFormsApplication1
     [Serializable]
     struct Story
     {
-   public string title, url;
-   public string dateTime;
+   public string title, url, dateTime;
     }
+
+
+
+    [Serializable]
+    struct Bookmark
+    {
+        public string title, url;
+        
+    }
+
 
 
     public partial class Form1 : Form
     {
         public Form2 MenuForm;
+
         LinkedList<Story> History = new LinkedList<Story>();
+
+        LinkedList<Bookmark> Marks = new LinkedList<Bookmark>();
+
 
         public void Check_url()
         {
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             tabControl1.SelectedTab.Text = wb.DocumentTitle;
-            URL.Text = wb.Url.ToString();
+            URL.Text = wb.Url.AbsoluteUri;
 
 
 
@@ -40,7 +53,7 @@ namespace WindowsFormsApplication1
                 FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
 
                 Story story = new Story();
-                story.url = wb.Url.ToString();
+                story.url = wb.Url.AbsoluteUri;
                 story.title = wb.DocumentTitle;
                 story.dateTime = DateTime.Now.ToString();
                 History.AddLast(story);
@@ -56,7 +69,7 @@ namespace WindowsFormsApplication1
                 FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
                 History = (LinkedList<Story>)bf.Deserialize(fs);
                 Story story = new Story();
-                story.url = wb.Url.ToString();
+                story.url = wb.Url.AbsoluteUri;
                 story.title = wb.DocumentTitle;
                 story.dateTime = DateTime.Now.ToString();
                 History.AddLast(story);
@@ -279,6 +292,75 @@ namespace WindowsFormsApplication1
 
 
             }
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+           
+
+            WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
+            tabControl1.SelectedTab.Text = wb.DocumentTitle;
+          
+
+
+
+            if (!File.Exists("marks.bin"))
+            {
+
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream("marks.bin", FileMode.OpenOrCreate);
+                Bookmark mark = new Bookmark();
+                mark.url = wb.Url.AbsoluteUri;
+
+
+         //       mark.url = wb.Url.OriginalString;
+
+
+
+                mark.title = wb.DocumentTitle;
+              
+
+                Marks.AddLast(mark);
+                bf.Serialize(fs, Marks);   // Не хоче серіалізувати  поле url  об*єктів списку.
+                fs.Close();
+
+                /*****************************************/
+                Console.WriteLine("Obj Url = " + mark.url);
+                Console.WriteLine("Web URl = " + wb.Url.AbsoluteUri);
+                /****************************************  Перевірка даних які серіалізуються.    */
+
+            }
+            else
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream("marks.bin", FileMode.OpenOrCreate);
+
+                Marks = (LinkedList<Bookmark>)bf.Deserialize(fs);
+
+             
+
+
+
+
+                Bookmark mark = new Bookmark();
+                mark.url = wb.Url.AbsoluteUri;
+                mark.title = wb.DocumentTitle;
+                Marks.AddLast(mark);
+                bf.Serialize(fs, Marks); // Не хоче серіалізувати  поле url  об*єктів списку.
+                fs.Close();
+
+
+                /*****************************************/
+                Console.WriteLine("Obj Url = " + mark.url);
+                Console.WriteLine("Web URl = " + wb.Url.AbsoluteUri);
+                Console.WriteLine("Colletcion URl = " + Marks.Last.Value.url);
+                /****************************************  Перевірка даних які серіалізуються.    */ 
+
+
+            }
+
+
+
         }
     }
 }
