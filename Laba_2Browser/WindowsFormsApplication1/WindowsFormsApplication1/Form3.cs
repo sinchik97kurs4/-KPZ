@@ -14,7 +14,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Form3 : Form
     {
-        LinkedList<Story> History = new LinkedList<Story>();
+        List<Story> History = new List<Story>();
         Story []HistoryArray; 
         public Form3()
         {
@@ -54,7 +54,7 @@ namespace WindowsFormsApplication1
 
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
-                History = (LinkedList<Story>)bf.Deserialize(fs);
+                History = (List<Story>)bf.Deserialize(fs);
                 fs.Close();
                 HistoryArray = History.ToArray();
 

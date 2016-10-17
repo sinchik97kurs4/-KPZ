@@ -13,30 +13,15 @@ using System.IO;
 
 namespace WindowsFormsApplication1
 {
-    [Serializable]
-    struct Story
-    {
-   public string title, url, dateTime;
-    }
-
-
-
-    [Serializable]
-    struct Bookmark
-    {
-        public string title, url;
-        
-    }
-
+    
 
 
     public partial class Form1 : Form
     {
         public Form2 MenuForm;
+        List<Story> History = new List<Story>();
 
-        LinkedList<Story> History = new LinkedList<Story>();
-
-        LinkedList<Bookmark> Marks = new LinkedList<Bookmark>();
+        List<Bookmark> Marks = new List<Bookmark>();
 
 
         public void Check_url()
@@ -47,17 +32,26 @@ namespace WindowsFormsApplication1
 
 
 
-            if (!File.Exists("story.bin"))
+            if (!File.Exists("story.bin")) //Якщо файла не існує
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
 
-                Story story = new Story();
-                story.url = wb.Url.AbsoluteUri;
-                story.title = wb.DocumentTitle;
-                story.dateTime = DateTime.Now.ToString();
-                History.AddLast(story);
-                bf.Serialize(fs, History);
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream fs = new FileStream("story.bin", FileMode.Create); //Стоврюємо файл
+
+
+                Story story = new Story(wb.DocumentTitle, wb.Url.AbsoluteUri); // Створюємо одиницю сторінки
+                History.Add(story); // Добавляємо її до всієї історії.
+                bf.Serialize(fs, History); //Зберігаємо її у файл
+                fs.Close();
+
+
+
+
+
+
+                fs = new FileStream("story.bin", FileMode.Open); //Стоврюємо файл
+                History = (List<Story>)bf.Deserialize(fs);
+                Console.WriteLine(History.Last().url);
                 fs.Close();
               
 
@@ -66,13 +60,18 @@ namespace WindowsFormsApplication1
             {
 
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
-                History = (LinkedList<Story>)bf.Deserialize(fs);
-                Story story = new Story();
-                story.url = wb.Url.AbsoluteUri;
-                story.title = wb.DocumentTitle;
-                story.dateTime = DateTime.Now.ToString();
-                History.AddLast(story);
+                FileStream fs = new FileStream("story.bin", FileMode.Open);
+
+                History = (List<Story>)bf.Deserialize(fs);// дістаємо дані з існуючого списка.
+
+
+                
+                Story story = new Story(wb.DocumentTitle,wb.Url.AbsoluteUri);
+
+
+
+                History.Add(story);
+                Console.WriteLine(History.Last().url);
                 bf.Serialize(fs, History);
                 fs.Close();
               
@@ -196,14 +195,14 @@ namespace WindowsFormsApplication1
         {
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             wb.GoForward();
-            Check_url();
+           
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             wb.GoBack();
-            Check_url();
+          
         }
 
         private void tabControl1_KeyUp(object sender, KeyEventArgs e)
@@ -229,7 +228,7 @@ namespace WindowsFormsApplication1
 
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             wb.Refresh();
-            Check_url();
+          
         }
 
    
@@ -238,7 +237,7 @@ namespace WindowsFormsApplication1
 
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             wb.Stop();
-            Check_url();
+           
         }
 
        
@@ -308,53 +307,38 @@ namespace WindowsFormsApplication1
             {
 
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("marks.bin", FileMode.OpenOrCreate);
-                Bookmark mark = new Bookmark();
-                mark.url = wb.Url.AbsoluteUri;
+                FileStream fs = new FileStream("marks.bin", FileMode.Create);
+           
+               
+                Marks.Add(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
 
-
-         //       mark.url = wb.Url.OriginalString;
-
-
-
-                mark.title = wb.DocumentTitle;
-              
-
-                Marks.AddLast(mark);
-                bf.Serialize(fs, Marks);   // Не хоче серіалізувати  поле url  об*єктів списку.
+                bf.Serialize(fs, Marks);   
                 fs.Close();
 
-                /*****************************************/
-                Console.WriteLine("Obj Url = " + mark.url);
-                Console.WriteLine("Web URl = " + wb.Url.AbsoluteUri);
-                /****************************************  Перевірка даних які серіалізуються.    */
-
+            
             }
             else
             {
                 BinaryFormatter bf = new BinaryFormatter();
                 FileStream fs = new FileStream("marks.bin", FileMode.OpenOrCreate);
-
-                Marks = (LinkedList<Bookmark>)bf.Deserialize(fs);
-
-             
-
-
-
-
-                Bookmark mark = new Bookmark();
-                mark.url = wb.Url.AbsoluteUri;
-                mark.title = wb.DocumentTitle;
-                Marks.AddLast(mark);
-                bf.Serialize(fs, Marks); // Не хоче серіалізувати  поле url  об*єктів списку.
+                Marks.Add(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
+                bf.Serialize(fs, Marks);
                 fs.Close();
 
 
-                /*****************************************/
-                Console.WriteLine("Obj Url = " + mark.url);
-                Console.WriteLine("Web URl = " + wb.Url.AbsoluteUri);
-                Console.WriteLine("Colletcion URl = " + Marks.Last.Value.url);
-                /****************************************  Перевірка даних які серіалізуються.    */ 
+
+
+                foreach (var x in Marks)
+                {
+
+                    Console.WriteLine("All urls = " + x.url);
+
+
+                }
+
+
+
+
 
 
             }
@@ -363,4 +347,31 @@ namespace WindowsFormsApplication1
 
         }
     }
+    [Serializable]
+    public class Story
+    {
+        public string title, url, dateTime;
+        public Story(string Title, string Url)
+        {
+            title = Title;
+            url = Url;
+            dateTime = DateTime.Now.ToString();
+        }
+
+    }
+
+
+
+    [Serializable]
+    public class Bookmark
+    {
+        public string title, url;
+        public Bookmark(string Title, string Url)
+        {
+            title = Title;
+            url = Url;
+        }
+
+    }
+
 }

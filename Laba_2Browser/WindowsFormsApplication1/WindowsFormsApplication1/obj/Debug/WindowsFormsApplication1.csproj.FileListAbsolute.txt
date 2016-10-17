@@ -19,3 +19,15 @@ E:\Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj
 E:\Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form2.resources
 E:\Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form3.resources
 E:\Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form4.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form2.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form3.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form4.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+A:\HPK_Repo\-KPZ\Laba_2Browser\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
