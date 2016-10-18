@@ -48,10 +48,10 @@ namespace WindowsFormsApplication1
 
 
 
-            if (File.Exists("marks.bin"))
+            if (File.Exists(Application.CommonAppDataPath + "marks.bin"))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("marks.bin", FileMode.Open);
+                FileStream fs = new FileStream(Application.CommonAppDataPath + "marks.bin", FileMode.OpenOrCreate);
 
                 marks = (LinkedList<Bookmark>)bf.Deserialize(fs);
 
@@ -75,6 +75,11 @@ namespace WindowsFormsApplication1
             }
 
 
+        }
+
+        private void Form4_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Dispose();
         }
     }
 }

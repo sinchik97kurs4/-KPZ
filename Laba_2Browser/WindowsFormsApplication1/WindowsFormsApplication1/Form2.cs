@@ -12,13 +12,13 @@ namespace WindowsFormsApplication1
 {
     public partial class Form2 : Form
     {
-        Form4 bookmarks = new Form4();
-        Form3 History = new Form3();
+      
+      
 
         public Form2()
         {
             InitializeComponent();
-            bookmarks.Hide();
+           
 
         }
 
@@ -35,12 +35,19 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            Form3 History = new Form3();
             History.ShowDialog();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            Form4 bookmarks = new Form4();
             bookmarks.ShowDialog();
+        }
+
+        private void Form2_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Dispose();
         }
     }
 }

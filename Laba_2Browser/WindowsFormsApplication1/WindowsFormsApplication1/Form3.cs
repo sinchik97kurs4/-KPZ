@@ -14,7 +14,8 @@ namespace WindowsFormsApplication1
 {
     public partial class Form3 : Form
     {
-        List<Story> History = new List<Story>();
+        LinkedList<Story> History = new LinkedList<Story>();
+
         Story []HistoryArray; 
         public Form3()
         {
@@ -31,20 +32,23 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            File.Delete("story.bin");
-          
+            File.Delete(Application.CommonAppDataPath + "story.bin");
+
+            dataGridView1.Dispose();
+            
+            /*
             for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 
                     dataGridView1.Rows.RemoveAt(i);
                 
-            }
+            }*/
         }
 
         private void Form3_Load(object sender, EventArgs e)
         {
 
-            if (!File.Exists("story.bin"))
+            if (!File.Exists(Application.CommonAppDataPath + "story.bin"))
             {
                 MessageBox.Show("Story is clear");
 
@@ -53,11 +57,16 @@ namespace WindowsFormsApplication1
             {
 
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("story.bin", FileMode.OpenOrCreate);
-                History = (List<Story>)bf.Deserialize(fs);
+                FileStream fs = new FileStream(Application.CommonAppDataPath + "story.bin", FileMode.OpenOrCreate);
+                History = (LinkedList<Story>)bf.Deserialize(fs);
                 fs.Close();
-                HistoryArray = History.ToArray();
 
+
+                Console.WriteLine(History.Last().url);
+
+               HistoryArray = History.ToArray();
+
+           
                 for (int i = 0; i < HistoryArray.Count(); i++)
                 {
                     dataGridView1.Rows.Add(HistoryArray[i].title, HistoryArray[i].dateTime, HistoryArray[i].url);
@@ -66,6 +75,11 @@ namespace WindowsFormsApplication1
 
             }
 
+        }
+
+        private void Form3_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Dispose();
         }
     }
 }

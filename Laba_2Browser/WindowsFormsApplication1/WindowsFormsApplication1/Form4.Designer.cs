@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.BackBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.Title = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BackBtn = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,6 +46,17 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(579, 494);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // Title
+            // 
+            this.Title.HeaderText = "Title";
+            this.Title.Name = "Title";
+            // 
+            // Url
+            // 
+            this.Url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Url.HeaderText = "Url";
+            this.Url.Name = "Url";
             // 
             // BackBtn
             // 
@@ -67,17 +78,6 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Title
-            // 
-            this.Title.HeaderText = "Title";
-            this.Title.Name = "Title";
-            // 
-            // Url
-            // 
-            this.Url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Url.HeaderText = "Url";
-            this.Url.Name = "Url";
-            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -89,7 +89,8 @@
             this.MaximumSize = new System.Drawing.Size(600, 600);
             this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "Form4";
-            this.Text = "Form4";
+            this.Text = "BookMarks";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form4_FormClosed);
             this.Load += new System.EventHandler(this.Form4_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

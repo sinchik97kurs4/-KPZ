@@ -39,40 +39,46 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Title,
             this.Date_and_Time,
             this.Url});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 55);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 161);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(560, 494);
+            this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
+            this.dataGridView1.Size = new System.Drawing.Size(651, 388);
             this.dataGridView1.TabIndex = 0;
             // 
             // Title
             // 
             this.Title.HeaderText = "Title";
             this.Title.Name = "Title";
+            this.Title.ReadOnly = true;
             // 
             // Date_and_Time
             // 
             this.Date_and_Time.HeaderText = "Date and Time";
             this.Date_and_Time.Name = "Date_and_Time";
+            this.Date_and_Time.ReadOnly = true;
             // 
             // Url
             // 
             this.Url.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Url.HeaderText = "Url Adress";
             this.Url.Name = "Url";
+            this.Url.ReadOnly = true;
             // 
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("Segoe Print", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(303, 1);
+            this.button2.Location = new System.Drawing.Point(307, 1);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(269, 48);
+            this.button2.Size = new System.Drawing.Size(353, 88);
             this.button2.TabIndex = 2;
             this.button2.Text = "Clear story";
             this.button2.UseVisualStyleBackColor = true;
@@ -84,7 +90,7 @@
             this.button1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.button1.Location = new System.Drawing.Point(12, 1);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(285, 48);
+            this.button1.Size = new System.Drawing.Size(289, 88);
             this.button1.TabIndex = 3;
             this.button1.Text = "Back to menu";
             this.button1.UseVisualStyleBackColor = true;
@@ -94,14 +100,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 561);
+            this.ClientSize = new System.Drawing.Size(675, 561);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.dataGridView1);
-            this.MaximumSize = new System.Drawing.Size(600, 600);
             this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "Form3";
             this.Text = "HistoryManager";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3_FormClosed);
             this.Load += new System.EventHandler(this.Form3_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
