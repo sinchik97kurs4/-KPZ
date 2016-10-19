@@ -19,62 +19,76 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         public Form2 MenuForm;
-        List<Story> History = new List<Story>();
+        LinkedList<Story> History = new LinkedList<Story>();
 
-        List<Bookmark> Marks = new List<Bookmark>();
+    
+        LinkedList<Bookmark> Marks = new LinkedList<Bookmark>();
+
+        public void WriteMarks(Bookmark unit)
+        {
+            var bf = new BinaryFormatter();
+            var fs = new FileStream(Application.CommonAppDataPath + "marks.bin", FileMode.OpenOrCreate);
+            Marks.AddFirst(unit);
+            bf.Serialize(fs, Marks);
+            fs.Close();
+          
+        }
+        public void WriteHistory(Story unit)
+        {
+            var bf = new BinaryFormatter();
+            var fs = new FileStream(Application.CommonAppDataPath + "story.bin", FileMode.OpenOrCreate);
+            History.AddFirst(unit);
+            bf.Serialize(fs, History);
+            fs.Close();
+          
+        }
+
+        public void LoadMarks()
+        {
+            var bf = new BinaryFormatter();
+            var fs = new FileStream(Application.CommonAppDataPath + "marks.bin", FileMode.Open);
+            Marks = (LinkedList<Bookmark>)bf.Deserialize(fs);
+            fs.Close();
+           
+        }
+        public void LoadHistory()
+        {
+            var bf = new BinaryFormatter();
+            var fs = new FileStream(Application.CommonAppDataPath + "story.bin", FileMode.Open);
+            History = (LinkedList<Story>)bf.Deserialize(fs);
+            fs.Close();
+            
+        }
 
 
         public void Check_url()
         {
+
+
             WebBrowser wb = (WebBrowser)tabControl1.SelectedTab.Controls[0];
             tabControl1.SelectedTab.Text = wb.DocumentTitle;
             URL.Text = wb.Url.AbsoluteUri;
+            BinaryFormatter bf = new BinaryFormatter();
 
 
 
-            if (!File.Exists("story.bin")) //Якщо файла не існує
+            if (!File.Exists(Application.CommonAppDataPath + "story.bin")) //Якщо файла не існує
             {
 
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("story.bin", FileMode.Create); //Стоврюємо файл
-
-
-                Story story = new Story(wb.DocumentTitle, wb.Url.AbsoluteUri); // Створюємо одиницю сторінки
-                History.Add(story); // Добавляємо її до всієї історії.
-                bf.Serialize(fs, History); //Зберігаємо її у файл
-                fs.Close();
-
-
-
-
-
-
-                fs = new FileStream("story.bin", FileMode.Open); //Стоврюємо файл
-                History = (List<Story>)bf.Deserialize(fs);
-                Console.WriteLine(History.Last().url);
-                fs.Close();
               
+                Story story = new Story(wb.DocumentTitle, wb.Url.AbsoluteUri); // Створюємо одиницю сторінки
+                WriteHistory(story);
+
 
             }
             else
             {
 
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("story.bin", FileMode.Open);
-
-                History = (List<Story>)bf.Deserialize(fs);// дістаємо дані з існуючого списка.
-
-
-                
+                LoadHistory();
+                Console.WriteLine(History.Count);
                 Story story = new Story(wb.DocumentTitle,wb.Url.AbsoluteUri);
+                WriteHistory(story);
 
-
-
-                History.Add(story);
-                Console.WriteLine(History.Last().url);
-                bf.Serialize(fs, History);
-                fs.Close();
-              
 
             }
 
@@ -83,9 +97,9 @@ namespace WindowsFormsApplication1
 
 
 
-            
-            
-            
+
+
+
 
         }
 
@@ -268,8 +282,8 @@ namespace WindowsFormsApplication1
 
         private void button5_Click(object sender, EventArgs e)
         {
-           
-            MenuForm.ShowDialog();
+                 Form2 MenuForm = new Form2();
+                 MenuForm.ShowDialog();
 
         }
 
@@ -303,44 +317,15 @@ namespace WindowsFormsApplication1
 
 
 
-            if (!File.Exists("marks.bin"))
+            if (!File.Exists(Application.CommonAppDataPath + "marks.bin"))
             {
 
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("marks.bin", FileMode.Create);
-           
-               
-                Marks.Add(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
-
-                bf.Serialize(fs, Marks);   
-                fs.Close();
-
-            
+                WriteMarks(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
             }
             else
             {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream fs = new FileStream("marks.bin", FileMode.OpenOrCreate);
-                Marks.Add(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
-                bf.Serialize(fs, Marks);
-                fs.Close();
-
-
-
-
-                foreach (var x in Marks)
-                {
-
-                    Console.WriteLine("All urls = " + x.url);
-
-
-                }
-
-
-
-
-
-
+                LoadMarks();
+                WriteMarks(new Bookmark(wb.DocumentTitle, wb.Url.AbsoluteUri));
             }
 
 
